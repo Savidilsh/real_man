@@ -110,6 +110,7 @@ catkin_package(
 #  LIBRARIES arm_driver
 #  CATKIN_DEPENDS geometry_msgs dual_arm_msgs roscpp rospy std_msgs
 #  DEPENDS system_lib
+  CATKIN_DEPENDS geometry_msgs dual_arm_msgs roscpp rospy std_msgs
 )
 
 ###########
@@ -201,6 +202,6 @@ include_directories(
 ## Add folders to be run by python nosetests
 # catkin_add_nosetests(test)
 add_executable(arm_driver src/arm_driver.cpp src/cJSON.c)
+add_dependencies(arm_driver ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(arm_driver ${catkin_LIBRARIES})
-#add_dependencies(arm_driver arm_driver_generate_messages_cpp)
 #add_definitions(-std=c99) 

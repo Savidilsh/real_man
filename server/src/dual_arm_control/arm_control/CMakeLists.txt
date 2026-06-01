@@ -111,7 +111,7 @@ catkin_package(
 #  LIBRARIES arm_control
 #  CATKIN_DEPENDS actionlib actionlib_msgs message_generation roscpp rospy std_msgs
 #  DEPENDS system_lib
-   CATKIN_DEPENDS actionlib_msgs
+   CATKIN_DEPENDS actionlib actionlib_msgs roscpp rospy std_msgs dual_arm_msgs
 )
 
 ###########
@@ -211,4 +211,5 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(arm_control src/arm_control.cpp)
+add_dependencies(arm_control ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 target_link_libraries(arm_control ${catkin_LIBRARIES} )

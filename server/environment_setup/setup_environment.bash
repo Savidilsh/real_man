@@ -21,6 +21,8 @@ pip install --no-cache-dir \
 pip install --force-reinstall --no-cache-dir numpy==1.22.0 networkx==2.8.8
 
 cd "$SERVER_ROOT"
+catkin_make --pkg dual_arm_msgs
+source "$SERVER_ROOT/devel/setup.bash"
 catkin_make
 
 python -c "import numpy, torch, whisper; print('numpy', numpy.__version__); print('torch', torch.__version__, torch.cuda.is_available()); print('whisper ok')"

@@ -180,7 +180,7 @@ Write_Register.msg
 catkin_package(
   INCLUDE_DIRS include
   #LIBRARIES dual_arm_msgs
-  CATKIN_DEPENDS geometry_msgs rospy std_msgs roscpp
+  CATKIN_DEPENDS message_runtime geometry_msgs rospy std_msgs roscpp
   # DEPENDS system_lib 
 )
 
