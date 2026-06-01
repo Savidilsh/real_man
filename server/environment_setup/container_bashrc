@@ -1,0 +1,9 @@
+# Bash startup file used inside the server Docker container.
+
+if [ -f /etc/bash.bashrc ]; then
+  source /etc/bash.bashrc
+fi
+
+if [ -f /root/ws_demo/catkin_ws/environment_setup/server_env.bash ]; then
+  source /root/ws_demo/catkin_ws/environment_setup/server_env.bash
+fi

@@ -1,0 +1,5 @@
+<launch>
+
+    <!-- agv_demo节点 -->
+    <node respawn="true" pkg="agv_ros" name="process" type="agv_controller.py" output="screen"/>
+</launch>

@@ -1,0 +1,13 @@
+<launch>
+    <!-- 右臂控制节点 -->
+    <node pkg="arm_control" type="arm_control" name="right_arm_control" output="screen">
+        <param name="arm_type" value="r"/>
+        <param name="Arm_Dof" value="7"/>
+    </node>
+
+    <!-- 左臂控制节点 -->
+    <node pkg="arm_control" type="arm_control" name="left_arm_control" output="screen">
+        <param name="arm_type" value="l"/>
+        <param name="Arm_Dof" value="7"/>
+    </node>
+</launch> 

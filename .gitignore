@@ -1,0 +1,48 @@
+# ROS/catkin generated output
+server/build/
+server/devel/
+server/install/
+server/logs/
+server/.catkin_tools/
+robot/build/
+robot/devel/
+robot/install/
+robot/logs/
+robot/.catkin_tools/
+
+# Python generated files
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Runtime agent state and generated audio/model caches
+server/sayplan/savindu/json/
+server/sayplan/savindu/audio/
+server/sayplan/savindu/models/
+robot/sayplan/savindu/json/
+robot/sayplan/savindu/audio/
+robot/sayplan/savindu/models/
+
+# Large model/checkpoint files
+*.pth
+*.pt
+*.ckpt
+*.onnx
+
+# Large/generated data
+*.bag
+*.las
+*.pcd
+captures/
+trajectory_data/
+data_collection_*/
+sampled_data_collection_*/
+cv_department_*/
+
+# Local/editor files
+.env
+.vscode/
+.idea/
+.DS_Store
+*debug/
+custom_bashrc

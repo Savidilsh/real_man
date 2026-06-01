@@ -1,0 +1,58 @@
+<launch>
+  <!-- 相机基本参数 -->
+  <arg name="serial_no"           default=""/>
+  <arg name="usb_port_id"         default=""/>
+  <arg name="device_type"         default=""/>
+  <arg name="json_file_path"      default=""/>
+  <arg name="camera"              default="camera"/>
+  <arg name="tf_prefix"           default="$(arg camera)"/>
+  
+  <!-- RGB图像分辨率设置 - 320x240 -->
+  <arg name="color_width"         default="320"/>
+  <arg name="color_height"        default="240"/>
+  <arg name="enable_color"        default="true"/>
+  <arg name="color_fps"           default="60"/>  <!-- 提高帧率减少motion blur -->
+  
+  <!-- 禁用深度图像 -->
+  <arg name="enable_depth"        default="false"/>
+  
+  <!-- 其他设置 -->
+  <arg name="enable_pointcloud"   default="false"/>
+  <arg name="enable_sync"         default="false"/>
+  <arg name="align_depth"         default="false"/>
+  <arg name="publish_tf"          default="false"/>  <!-- 不需要TF -->
+  
+  <!-- 启动相机节点 -->
+  <group ns="$(arg camera)">
+    <include file="$(find realsense2_camera)/launch/includes/nodelet.launch.xml">
+      <arg name="tf_prefix"                value="$(arg tf_prefix)"/>
+      <arg name="serial_no"                value="$(arg serial_no)"/>
+      <arg name="usb_port_id"              value="$(arg usb_port_id)"/>
+      <arg name="device_type"              value="$(arg device_type)"/>
+      <arg name="json_file_path"           value="$(arg json_file_path)"/>
+      
+      <!-- RGB图像参数 -->
+      <arg name="color_width"              value="$(arg color_width)"/>
+      <arg name="color_height"             value="$(arg color_height)"/>
+      <arg name="enable_color"             value="$(arg enable_color)"/>
+      <arg name="color_fps"                value="$(arg color_fps)"/>
+      
+      <!-- 禁用深度图像 -->
+      <arg name="enable_depth"             value="$(arg enable_depth)"/>
+      
+      <!-- 其他功能 -->
+      <arg name="enable_pointcloud"        value="$(arg enable_pointcloud)"/>
+      <arg name="enable_sync"              value="$(arg enable_sync)"/>
+      <arg name="align_depth"              value="$(arg align_depth)"/>
+      <arg name="publish_tf"               value="$(arg publish_tf)"/>
+      
+      <!-- 禁用不需要的流 -->
+      <arg name="enable_infra"             value="false"/>
+      <arg name="enable_infra1"            value="false"/>
+      <arg name="enable_infra2"            value="false"/>
+      <arg name="enable_fisheye"           value="false"/>
+      <arg name="enable_gyro"              value="false"/>
+      <arg name="enable_accel"             value="false"/>
+    </include>
+  </group>
+</launch> 

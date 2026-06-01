@@ -1,0 +1,11 @@
+moveit_setup_assistant_config:
+  URDF:
+    package: dual_65B_arm_robot
+    relative_path: urdf/dual_65B_arm_robot.urdf
+    xacro_args: ""
+  SRDF:
+    relative_path: config/dual_65B_arm_robot.srdf
+  CONFIG:
+    author_name: Haley Li
+    author_email: haleyli@realman-robot.com
+    generated_timestamp: 1726132579

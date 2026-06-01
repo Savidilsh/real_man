@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<launch>
+  
+  <!-- 标签 -->
+  <arg name="R_Arm_IP"                   default="192.168.10.19"/>    <!-- 设置TCP连接时的IP -->
+  <arg name="R_Arm_Port"                 default="8080"/>            <!-- 设置TCP连接时的端口 -->
+  <arg name="L_Arm_IP"                   default="192.168.10.18"/>    <!-- 设置TCP连接时的IP -->
+  <arg name="L_Arm_Port"                 default="8080"/>            <!-- 设置TCP连接时的端口 -->
+  <arg name="Arm_Dof"                  default="7"/>               <!-- 机械臂自由度设置 -->
+  <arg name="Arm_Type"                 default="RM75"/>            <!-- 机械臂型号设置 -->
+  <arg name="Follow"                   default="false"/>           <!-- 高低跟随设置 false：低跟随 true：高跟随 -->
+  <arg name="Udp_IP"                   default="192.168.1.10"/>    <!-- 设置udp主动上报IP -->
+  <arg name="R_Udp_Port"                 default="8089"/>            <!-- 设置udp主动上报端口 -->
+  <arg name="L_Udp_Port"                 default="8099"/>            <!-- 设置udp主动上报端口 -->
+  <arg name="Udp_cycle"                default="5"/>               <!-- 设置udp主动上报周期（ms） 最低为5(200Hz)，需要为5的倍数 -->
+  <arg name="Udp_force_coordinate"     default="0"/>               <!-- 设置六维力参考坐标系 -->
+
+  <node ns="r_arm" pkg="arm_control" name="arm_control" type="arm_control" output="screen">
+      <param name="Arm_Dof"           value="$(arg Arm_Dof)"/>  
+  </node>
+  <node ns="l_arm" pkg="arm_control" name="arm_control" type="arm_control" output="screen">
+      <param name="Arm_Dof"           value="$(arg Arm_Dof)"/>  
+  </node>
+
+
+  <!-- 启动机械臂底层驱动节点 -->
+  <node ns="r_arm" name="arm_driver" pkg="arm_driver" type="arm_driver" output="screen" respawn="false">
+      <!-- 机器人坐标frame -->
+      <param name="Arm_IP"                value="$(arg R_Arm_IP)"/> 
+      <param name="Arm_Port"              value="$(arg R_Arm_Port)"/>   
+      <param name="Arm_Dof"               value="$(arg Arm_Dof)"/>   
+      <param name="Arm_Type"              value="$(arg Arm_Type)"/> 
+      <param name="Follow"                value="$(arg Follow)"/>  
+      <param name="Udp_IP"                value="$(arg Udp_IP)"/>   
+      <param name="Udp_Port"              value="$(arg R_Udp_Port)"/>  
+      <param name="Udp_cycle"             value="$(arg Udp_cycle)"/>  
+      <param name="Udp_force_coordinate"  value="$(arg Udp_force_coordinate)"/>  
+      <rosparam param="arm_joints">[r_joint1, r_joint2, r_joint3, r_joint4, r_joint5, r_joint6, r_joint7]</rosparam>
+  </node>
+
+  <!-- 启动机械臂底层驱动节点 -->
+  <node ns="l_arm" name="arm_driver" pkg="arm_driver" type="arm_driver" output="screen" respawn="false">
+    <!-- 机器人坐标frame -->
+    <param name="Arm_IP"                value="$(arg L_Arm_IP)"/> 
+    <param name="Arm_Port"              value="$(arg L_Arm_Port)"/>   
+    <param name="Arm_Dof"               value="$(arg Arm_Dof)"/>   
+    <param name="Arm_Type"              value="$(arg Arm_Type)"/> 
+    <param name="Follow"                value="$(arg Follow)"/>  
+    <param name="Udp_IP"                value="$(arg Udp_IP)"/>   
+    <param name="Udp_Port"              value="$(arg L_Udp_Port)"/>  
+    <param name="Udp_cycle"             value="$(arg Udp_cycle)"/>  
+    <param name="Udp_force_coordinate"  value="$(arg Udp_force_coordinate)"/>  
+    <rosparam param="arm_joints">[l_joint1, l_joint2, l_joint3, l_joint4, l_joint5, l_joint6, l_joint7]</rosparam>
+</node>
+  
+<include file="$(find dual_75B_arm_moveit_config)/launch/demo_realrobot.launch">
+  </include>
+
+
+</launch>

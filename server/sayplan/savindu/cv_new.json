@@ -1,0 +1,137 @@
+[
+  {
+    "node_name": "water_dispenser_2",
+    "neighbor_nodes": [
+      "canteen"
+    ],
+    "child_nodes": [
+      {
+        "node_name": "cup",
+        "node_type": "object",
+        "child_nodes": []
+      }
+    ]
+  },
+  {
+    "node_name": "canteen",
+    "neighbor_nodes": [
+      "water_dispenser_2",
+      "meeting_room_2"
+    ],
+    "description": [
+      "The canteen has a door, so someone may need to help bring items inside."
+    ],
+    "child_nodes": [
+      {
+        "node_name": "paper_serviettes",
+        "node_type": "object",
+        "child_nodes": []
+      },
+      {
+        "node_name": "plates",
+        "node_type": "object",
+        "child_nodes": []
+      },
+      {
+        "node_name": "fridge",
+        "node_type": "asset",
+        "child_nodes": []
+      }
+    ]
+  },
+  {
+    "node_name": "meeting_room_2",
+    "neighbor_nodes": [
+      "canteen",
+      "printer_area",
+      "garbage_bin"
+    ]
+  },
+  {
+    "node_name": "prof_ian_room",
+    "neighbor_nodes": [
+      "meeting_pod"
+    ]
+  },
+  {
+    "node_name": "meeting_pod",
+    "neighbor_nodes": [
+      "prof_ian_room",
+      "printer_area"
+    ]
+  },
+  {
+    "node_name": "printer_area",
+    "neighbor_nodes": [
+      "meeting_pod",
+      "meeting_room_2",
+      "meeting_room_1"
+    ],
+    "child_nodes": [
+      {
+        "node_name": "paper_waste_bin",
+        "node_type": "asset",
+        "child_nodes": []
+      },
+      {
+        "node_name": "printer_machine",
+        "node_type": "asset",
+        "child_nodes": []
+      },
+      {
+        "node_name": "paper_shredder",
+        "node_type": "asset",
+        "child_nodes": []
+      }
+    ]
+  },
+  {
+    "node_name": "meeting_room_1",
+    "neighbor_nodes": [
+      "printer_area",
+      "lounge",
+      "garbage_bin",
+      "water_dispenser_1"
+    ]
+  },
+  {
+    "node_name": "lounge",
+    "neighbor_nodes": [
+      "meeting_room_1"
+    ],
+    "child_nodes": [
+      {
+        "node_name": "sofa",
+        "node_type": "asset",
+        "child_nodes": []
+      },
+      {
+        "node_name": "seating_area",
+        "node_type": "asset",
+        "child_nodes": []
+      }
+    ]
+  },
+  {
+    "node_name": "garbage_bin",
+    "neighbor_nodes": [
+      "meeting_room_2",
+      "meeting_room_1",
+      "water_dispenser_1"
+    ]
+  },
+  {
+    "node_name": "water_dispenser_1",
+    "neighbor_nodes": [
+      "meeting_room_1",
+      "garbage_bin"
+    ],
+    "child_nodes": [
+      {
+        "node_name": "cup",
+        "node_type": "object",
+        "child_nodes": []
+      }
+    ]
+  }
+]
