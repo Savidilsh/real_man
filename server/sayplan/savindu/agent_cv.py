@@ -130,7 +130,7 @@ NAV_PROGRESS_TIMEOUT_SEC = 40.0
 SERVO1_MIN = 450
 SERVO1_MAX = 570
 SERVO1_CENTER = 510
-POSE_POLL_HZ = 2.0
+POSE_POLL_HZ =1.0
 STOP_BURST_COUNT = 4
 STOP_BURST_DELAY = 0.05
 POSE_STALE_MAX_SEC = 8.0
@@ -308,7 +308,7 @@ def generate_agent_prompt(current_location, scene_graph_str, instruction, conver
 Output rules:
 - First line must be: REASON: <one short sentence>.
 - After that, output only tool calls, one per line.
-- Allowed: nav("..."), speak("..."), vqa("..."), face("..."), greet(), grasp("...")
+- Allowed: nav("..."), speak("..."), vqa("..."), face("..."), greet(), grasp("..."), handing("..."), throwing("...")
 - Use exact scene graph node_name in nav().
 - For object/tool selection, use scene-graph child_nodes whenever possible.
 - Keep speak() short and natural.
@@ -321,22 +321,19 @@ VQA/check workflow rules:
 - For inspection/status tasks that use vqa(), remember the initial `current_location`.
 - Run checks as nav("...") + vqa("...") steps.
 - Do NOT add speak() lines that claim visual findings right after vqa().
-- After all checks, return to the initial location with nav("<initial current_location>").
-- Final speak() after returning must be neutral (e.g., "I finished the checks and will report what I observed.").
 
 Cleanup workflow rules:
 - For spill/cleanup/mess instructions, use a cleanup sequence rather than hand-over by default.
 - Pick a suitable cleaning item from child_nodes via grasp("..."), then perform imagined cleaning at the target location with speak().
-- After cleaning, if `garbage_bin` exists in the scene graph, nav("garbage_bin") and speak() that you are imagining disposing the used item.
+- After cleaning, if a garbage bin node exists in the scene graph, nav() to that exact node_name and use throwing("object") for the used item.
 - Only hand over items to a person if the user explicitly asks for bring/give/hand-over.
 
-Grasp placeholder rules:
-- grasp() is symbolic only; no real arm movement.
+Symbolic action rules:
+- grasp(), handing(), and throwing() are symbolic only; no real arm movement.
 - Use exact child-node object names when available (e.g., "cup"), not vague targets like "water".
 - If the requested thing is a liquid/serving (not directly graspable), choose a suitable container/tool child node first, then use speak() to describe the imagined preparation/transfer.
-- After grasp("object"), add speak() saying pickup is imagined.
-- For bring/give/hand-over tasks, after reaching recipient, add:
-  speak("I am handing over my imagined <object> to you.")
+- Do not add speak() immediately after grasp(), handing(), or throwing(); these tools already speak their imagined action.
+- For bring/give/hand-over tasks, after reaching the recipient, use handing("object").
 
 Scenario example:
 User: "Prof Ian needs something to drink."
@@ -344,9 +341,8 @@ Plan example:
 speak("I will get a drink for Prof Ian.")
 nav("water_dispenser_1")
 grasp("cup")
-speak("If I had arms, I would pick up this cup and imagine filling it with water.")
 nav("prof_ian_room")
-speak("I am handing over my imagined cup of water to you.")
+handing("cup")
 
 CURRENT STATE:
 - current_location: "{current_location}"
@@ -801,7 +797,7 @@ class RobotAgent:
       return self._wait_for_navigation_completion(timeout, interrupt_handler)
 
 
-  def nav(self, location: str, timeout: float = 90.0, interrupt_handler=None) -> bool:
+  def nav(self, location: str, timeout: float = 500.0, interrupt_handler=None) -> bool:
       rospy.loginfo(f"Atomic operation [nav]: Navigating to '{location}'")
       with self.lock:
           self.cruise_markers = [location]
@@ -813,7 +809,7 @@ class RobotAgent:
       return self.point_nav(location, timeout, interrupt_handler)
 
 
-  def point_nav(self, point_name, timeout=60.0, interrupt_handler=None):
+  def point_nav(self, point_name, timeout=400.0, interrupt_handler=None):
       rospy.loginfo(f"Starting navigation to named point: '{point_name}'...")
       self.pub_nav_marker.publish(String(data=point_name))
       return self._wait_for_navigation_completion(timeout, interrupt_handler)
@@ -1069,6 +1065,34 @@ class RobotAgent:
           "but I still cannot move them, so I am imagining I picked it up."
       )
 
+  def handing(self, object_name: str) -> bool:
+      """Placeholder handover tool that only narrates an imagined handover."""
+      target = (object_name or "").strip().strip('"').strip("'")
+      if not target:
+          target = self._imagined_grasp_object or "item"
+      rospy.loginfo(f"Running handing placeholder for '{target}'")
+      success = self.speak(
+          f"If I had arms, I would definitely hand over this {target}, "
+          "but I still cannot move it, so I am imagining I handed it over."
+      )
+      if success:
+          self._imagined_grasp_object = None
+      return success
+
+  def throwing(self, object_name: str) -> bool:
+      """Placeholder throwing tool that only narrates an imagined disposal."""
+      target = (object_name or "").strip().strip('"').strip("'")
+      if not target:
+          target = self._imagined_grasp_object or "item"
+      rospy.loginfo(f"Running throwing placeholder for '{target}'")
+      success = self.speak(
+          f"If I had arms, I would definitely throw this {target} into the bin, "
+          "but I still cannot move it, so I am imagining I threw it away."
+      )
+      if success:
+          self._imagined_grasp_object = None
+      return success
+
   def _start_busy_audio(self, audio_name: str):
       if not audio_name:
           return
@@ -1268,7 +1292,7 @@ class RobotAgent:
           return answer
       except Exception as e:
           rospy.logerr(f"Failed to call OpenAI VQA API: {e}")
-          return "Sorry, I encountered an error while trying to analyze the image."
+          return "Sorry, I encountered an error while trying to analyze the scene."
       finally:
           self._stop_busy_audio()
 
@@ -2246,6 +2270,20 @@ class LLMPlanner:
                       rospy.logwarn("grasp operation missing object parameter.")
                       break
                   success = self.agent.grasp(args)
+                  if success:
+                      succeeded_steps.append(step)
+              elif action == "handing":
+                  if not args:
+                      rospy.logwarn("handing operation missing object parameter.")
+                      break
+                  success = self.agent.handing(args)
+                  if success:
+                      succeeded_steps.append(step)
+              elif action == "throwing":
+                  if not args:
+                      rospy.logwarn("throwing operation missing object parameter.")
+                      break
+                  success = self.agent.throwing(args)
                   if success:
                       succeeded_steps.append(step)
               elif action == "vqa":

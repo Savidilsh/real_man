@@ -44,7 +44,7 @@
     "neighbor_nodes": [
       "canteen",
       "printer_area",
-      "garbage_bin"
+      "garbage_bin_1"
     ]
   },
   {
@@ -90,7 +90,7 @@
     "neighbor_nodes": [
       "printer_area",
       "lounge",
-      "garbage_bin",
+      "garbage_bin_1",
       "water_dispenser_1"
     ]
   },
@@ -113,7 +113,7 @@
     ]
   },
   {
-    "node_name": "garbage_bin",
+    "node_name": "garbage_bin_1",
     "neighbor_nodes": [
       "meeting_room_2",
       "meeting_room_1",
@@ -124,7 +124,7 @@
     "node_name": "water_dispenser_1",
     "neighbor_nodes": [
       "meeting_room_1",
-      "garbage_bin"
+      "garbage_bin_1"
     ],
     "child_nodes": [
       {
