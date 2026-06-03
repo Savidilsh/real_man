@@ -1,0 +1,8 @@
+creator: WTBLS205387
+free_thresh: 0.196
+image: map_robotic.png
+map_type: v2
+negate: 0
+occupied_thresh: 0.65
+origin: [-14.885636, -28.31645, 0.0]
+resolution: 0.02
