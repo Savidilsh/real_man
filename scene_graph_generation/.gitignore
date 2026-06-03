@@ -1,0 +1,37 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Local environments
+.venv/
+venv/
+env/
+
+# Large data and generated outputs
+data/*
+outputs/*
+runs/*
+checkpoints/*
+*.ckpt
+*.pt
+*.pth
+*.npz
+*.npy
+*.ply
+*.las
+*.laz
+*.e57
+*.bin
+
+# Keep folder documentation
+!data/README.md
+!outputs/README.md
+!checkpoints/README.md
+
+# Logs
+*.log
+logs/
+

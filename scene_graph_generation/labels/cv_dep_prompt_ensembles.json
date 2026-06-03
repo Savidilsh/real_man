@@ -1,0 +1,127 @@
+{
+  "floor": [
+    "a floor surface in a university department building",
+    "an indoor floor",
+    "a walking floor area in a corridor or room"
+  ],
+  "wall": [
+    "a wall in a university department building",
+    "an indoor wall surface",
+    "a vertical wall separating rooms and corridors"
+  ],
+  "ceiling": [
+    "a ceiling in a university department building",
+    "an indoor ceiling surface above a room",
+    "a ceiling plane with lights and fixtures"
+  ],
+  "door": [
+    "a door in a university department building",
+    "a room entrance door",
+    "a flat vertical door panel in a doorway"
+  ],
+  "window": [
+    "a window in an indoor building",
+    "a glass window on a wall",
+    "a transparent window panel"
+  ],
+  "chair": [
+    "a chair in an office or classroom",
+    "an office chair with legs or wheels",
+    "a seat for one person"
+  ],
+  "table": [
+    "a table in a university room",
+    "a flat tabletop with legs",
+    "a meeting table or work table"
+  ],
+  "desk": [
+    "an office desk",
+    "a student or staff desk",
+    "a work desk with a flat top"
+  ],
+  "cabinet": [
+    "a storage cabinet",
+    "a tall cabinet with doors",
+    "a control cabinet or storage cupboard"
+  ],
+  "shelf": [
+    "a shelf or shelving unit",
+    "a rack with horizontal shelves",
+    "a storage shelf against a wall"
+  ],
+  "whiteboard": [
+    "a whiteboard mounted on a wall",
+    "a flat writing board in a classroom or office",
+    "a rectangular white board surface"
+  ],
+  "computer monitor": [
+    "a computer monitor on a desk",
+    "a flat display screen",
+    "a desktop monitor screen"
+  ],
+  "computer": [
+    "a desktop computer",
+    "a computer tower or workstation computer",
+    "computer equipment on or under a desk"
+  ],
+  "couch": [
+    "a couch or sofa",
+    "a soft seating sofa",
+    "a multi person upholstered seat"
+  ],
+  
+  "workstation": [
+    "a computer workstation",
+    "a desk workstation with monitor and equipment",
+    "an office workstation area"
+  ],
+  "plant": [
+    "an indoor plant",
+    "a potted plant",
+    "a decorative plant in a pot"
+  ],
+  "bottle": [
+    "a bottle on a table or shelf",
+    "a small bottle shaped object",
+    "a drink bottle or container"
+  ],
+  "coffee machine": [
+    "a coffee machine",
+    "a coffee maker on a counter",
+    "a small appliance for making coffee"
+  ],
+  "trash bin": [
+    "a trash bin",
+    "a waste bin on the floor",
+    "a garbage bin or recycling bin"
+  ],
+  "projector screen": [
+    "a projector screen on a wall",
+    "a large white projection screen",
+    "a pull down screen for presentations"
+  ],
+  "water cup": [
+    "a water cup",
+    "a small drinking cup",
+    "a cup on a desk or table"
+  ],
+  "printer": [
+    "a printer or copier",
+    "an office printer machine",
+    "a printing device on a table or stand"
+  ],
+  "elevator": [
+    "an elevator entrance",
+    "a lift door with metal panels"
+  ],
+  "water dispenser": [
+    "a water dispenser",
+    "a drinking water dispenser machine",
+    "a tall water cooler dispenser"
+  ],
+  "other": [
+    "an unknown object",
+    "a miscellaneous object in the scene",
+    "an object that is not one of the listed classes"
+  ]
+}

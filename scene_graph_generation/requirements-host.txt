@@ -1,0 +1,11 @@
+numpy<2
+scipy
+scikit-image
+open3d==0.18.0
+laspy
+lazrs
+plyfile
+pyyaml
+tqdm
+matplotlib
+

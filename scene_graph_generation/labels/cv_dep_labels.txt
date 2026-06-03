@@ -1,0 +1,23 @@
+floor
+wall
+ceiling
+door
+window
+chair
+table
+cabinet
+shelf
+whiteboard
+computer monitor
+computer
+couch
+workstation
+plant
+bottle
+coffee machine
+trash bin 
+projector screen
+water cup
+elevator
+water dispenser
+other

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Mosaic3D Label QA Viewer</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "/vendor/three.module.js"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main id="app">
+      <section id="viewport">
+        <div id="label-layer"></div>
+        <div id="hud">
+          <strong>Mosaic3D Label QA</strong>
+          <span id="status">loading</span>
+        </div>
+        <div id="toolbar">
+          <label>
+            Color
+            <select id="color-mode">
+              <option value="instance" selected>Instance</option>
+              <option value="semantic">Semantic</option>
+              <option value="original">Original</option>
+            </select>
+          </label>
+          <label>
+            Point Size
+            <input id="point-size" type="range" min="1" max="14" step="0.25" value="3.25" />
+          </label>
+          <label class="check">
+            <input id="show-labels" type="checkbox" checked />
+            Labels
+          </label>
+          <button id="segment-mode" title="Click points in the viewport to create a manual object segment">Segment</button>
+          <button id="top-view">Top</button>
+          <button id="reset-view">Reset</button>
+        </div>
+      </section>
+      <aside id="panel">
+        <header>
+          <h1>Objects</h1>
+          <p id="summary"></p>
+        </header>
+        <div class="controls">
+          <label>
+            Filter
+            <input id="filter" type="search" placeholder="chair, room_001, table_2" />
+          </label>
+          <label>
+            Min Points
+            <input id="min-points" type="number" min="0" step="100" value="250" />
+          </label>
+          <label>
+            Max Labels (0=all)
+            <input id="max-labels" type="number" min="0" step="1" value="0" />
+          </label>
+        </div>
+        <section id="bulk-panel" class="side-section">
+          <h2>Bulk Class Edit</h2>
+          <label>
+            Class
+            <select id="bulk-class"></select>
+          </label>
+          <div class="button-row">
+            <button id="bulk-delete-class" class="danger-button">Delete Class</button>
+            <button id="bulk-restore-class">Restore Class</button>
+          </div>
+          <p id="bulk-status">Choose a class to delete or restore all matching objects.</p>
+        </section>
+        <section id="selected"></section>
+        <section id="edit-panel" class="side-section" hidden>
+          <h2>Edit Object</h2>
+          <label>
+            Label
+            <input id="edit-label" type="text" />
+          </label>
+          <label class="check-row">
+            <input id="edit-active" type="checkbox" />
+            Active in saved output
+          </label>
+          <div class="button-row">
+            <button id="apply-label">Apply</button>
+            <button id="save-edits">Save Outputs</button>
+          </div>
+          <p id="save-status"></p>
+        </section>
+        <section id="segment-panel" class="side-section">
+          <h2>Manual Segment</h2>
+          <div class="segment-grid">
+            <label>
+              Label
+              <input id="segment-label" type="text" placeholder="object label" />
+            </label>
+            <label>
+              Radius m
+              <input id="segment-radius" type="number" min="0.15" max="10" step="0.1" value="1.5" />
+            </label>
+            <label>
+              Voxel m
+              <input id="segment-voxel" type="number" min="0.03" max="0.75" step="0.01" value="0.12" />
+            </label>
+            <label>
+              Semantic
+              <select id="segment-semantic">
+                <option value="same" selected>Same class</option>
+                <option value="loose">Same + other</option>
+                <option value="all">All nearby</option>
+              </select>
+            </label>
+          </div>
+          <div class="button-row">
+            <button id="accept-segment" disabled>Accept Segment</button>
+            <button id="reset-segment" disabled>Reset</button>
+          </div>
+          <p id="segment-info">No segment preview.</p>
+        </section>
+        <div id="object-list"></div>
+      </aside>
+    </main>
+    <script type="module" src="/static/app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,29 @@
+floor
+wall
+ceiling
+window
+chair
+table
+desk
+storage cabinet
+countertop
+staircase
+solar panel
+whiteboard
+computer monitor
+computer
+couch
+mobile robot
+robot arm
+wheeled rover
+microwave
+trash bin
+sink
+water dispenser
+pipe
+robot arms station
+screen
+workbench
+washing machine
+pool
+other
